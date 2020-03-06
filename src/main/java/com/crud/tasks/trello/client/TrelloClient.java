@@ -13,6 +13,7 @@ import java.net.URI;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 
 @Component
 public class TrelloClient {
@@ -38,12 +39,12 @@ public class TrelloClient {
 
         TrelloBoardDto[] boardsResponse = restTemplate.getForObject(url, TrelloBoardDto[].class);
 
-/*        Optional<TrelloBoardDto[]> boardsResponseOptional =
-                Optional.ofNullable(boardsResponse).orElse(); //
+/*
+        TrelloBoardDto[] boardsResponseOptional =
+                Optional.ofNullable(boardsResponse).orElse();
 
-        TrelloBoardDto[] values = boardsResponseOptional.orElse(new TrelloBoardDto[] );
-
-        return Arrays.asList(values);*/
+        return Arrays.asList(boardsResponseOptional);
+*/
 
 
         if (boardsResponse != null) {

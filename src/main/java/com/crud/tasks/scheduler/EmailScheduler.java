@@ -26,14 +26,14 @@ public class EmailScheduler {
     //@Scheduled(cron = "0 0 10 * * * ")
     public void sendInformationEmail() {
         long size = taskRepository.count();
+
+        String taskAmount=" task";
+
         if (size > 1) {
-            simpleEmailService.send(new Mail(
-                    adminConfig.getAdminMail(),
-                    SUBJECT, "Currenty in database got: " + size + "tasks", "kaczorowski91@gmail.com"));
-        } else {
-            simpleEmailService.send(new Mail(
-                    adminConfig.getAdminMail(),
-                    SUBJECT, "Currenty in database got: " + size + "task ", "kaczorowski91@gmail.com"));
+            taskAmount=" tasks";
         }
+
+        simpleEmailService.send(new Mail(adminConfig.getAdminMail(),
+                SUBJECT, "Currenty in database got: " + size + taskAmount, null));
     }
 }

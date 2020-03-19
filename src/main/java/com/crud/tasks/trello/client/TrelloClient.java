@@ -40,6 +40,7 @@ public class TrelloClient {
         } catch (RestClientException e) {
             LOGGER.error(e.getMessage(), e);
             return new ArrayList<>();
+
         }
     }
 

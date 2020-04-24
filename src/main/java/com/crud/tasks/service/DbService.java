@@ -27,7 +27,7 @@ public class DbService {
     }
 
     public void deleteById (final Long id) {
-         repository.deleteById(id);
+        repository.deleteById(id);
     }
 
 

@@ -6,6 +6,7 @@ import com.crud.tasks.domain.CreatedTrelloCardDto;
 import com.crud.tasks.domain.Mail;
 import com.crud.tasks.domain.TrelloBoardDto;
 import com.crud.tasks.domain.TrelloCardDto;
+import com.crud.tasks.repository.TaskRepository;
 import com.crud.tasks.trello.client.TrelloClient;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -18,6 +19,7 @@ import static java.util.Optional.ofNullable;
 public class TrelloService {
 
     private static final String SUBJECT = "Task: New Trello card";
+    private static final String COUNT_SUBJECT="Daily count of tasks";
 
     @Autowired
     private TrelloClient trelloClient;
@@ -28,6 +30,10 @@ public class TrelloService {
     @Autowired
     private AdminConfig adminConfig;
 
+    @Autowired
+    private TaskRepository taskRepository;
+
+
     public List<TrelloBoardDto> fetchTrelloBoards(){
         return trelloClient.getTrelloBoards();
     }
@@ -35,8 +41,12 @@ public class TrelloService {
     public CreatedTrelloCardDto createdTrelloCard(final TrelloCardDto trelloCardDto){
         CreatedTrelloCardDto newCard =trelloClient.createNewCard(trelloCardDto);
 
-       ofNullable(newCard).ifPresent(card-> emailService.send(new Mail(adminConfig.getAdminMail(), SUBJECT,
-               "New card: "+ trelloCardDto.getName() + "has been created on your Trello account",null)));
+        ofNullable(newCard).ifPresent(card-> emailService.send(new Mail(adminConfig.getAdminMail(), SUBJECT,
+                "New card: "+ trelloCardDto.getName() + "has been created on your Trello account",null)));
         return newCard;
+    }
+
+    public void sendTaskCount(){
+        emailService.send(new Mail(adminConfig.getAdminMail(),COUNT_SUBJECT,"Current amount of tasks "+taskRepository.count(),null));
     }
 }

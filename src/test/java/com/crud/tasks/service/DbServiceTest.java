@@ -1,6 +1,7 @@
 package com.crud.tasks.service;
 
 import com.crud.tasks.domain.Task;
+import com.crud.tasks.exception.TaskNotFoundException;
 import com.crud.tasks.repository.TaskRepository;
 import org.junit.Assert;
 import org.junit.Test;
@@ -33,12 +34,12 @@ public class DbServiceTest {
     }
 
     @Test
-    public void testGetTask(){
+    public void testGetTask() throws TaskNotFoundException {
         //Given
         Task task1 = new Task("Test Task","Test content");
         //Then
         dbService.saveTask(task1);
-        String tittle =dbService.getTask(task1.getId()).get().getTitle();
+        String tittle =dbService.getTask(task1.getId()).getTitle();
         //When
         Assert.assertEquals(tittle,task1.getTitle());
         //CleanUp

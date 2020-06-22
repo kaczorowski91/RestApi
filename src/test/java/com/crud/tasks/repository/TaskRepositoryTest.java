@@ -18,6 +18,7 @@ public class TaskRepositoryTest {
     @Test
     public void testRepositorySave(){
         //Given
+        taskRepository.deleteAll();
         Task task = new Task("Test Task","Test content");
         //Then
         taskRepository.save(task);
